@@ -34,8 +34,6 @@ fun formatFileDate(timestamp: Long): String {
     return format.format(date)
 }
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AudioRecorderRoot() {
