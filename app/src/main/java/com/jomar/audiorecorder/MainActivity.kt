@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jomar.audiorecorder.audio_recorder.AudioRecorderScreen
+import com.jomar.audiorecorder.audio_recorder.AudioRecorderRoot
 import com.jomar.audiorecorder.ui.theme.AudioRecorderTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AudioRecorderTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AudioRecorderScreen()
+                    AudioRecorderRoot()
                 }
             }
         }
