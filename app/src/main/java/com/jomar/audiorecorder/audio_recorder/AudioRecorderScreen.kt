@@ -59,76 +59,23 @@ fun AudioRecorderScreen(
             .fillMaxSize()
             .padding(paddingValues)
     ) {
-        // Seção de gravação
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = statusMessage,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(bottom = 24.dp)
-                )
-
-                if (hasPermission) {
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        FloatingActionButton(
-                            onClick = {
-                                if (isRecording) {
-                                    stopRecording()
-                                } else {
-                                    startRecording()
-                                }
-                            },
-                            modifier = Modifier.size(80.dp),
-                            shape = CircleShape,
-                            containerColor = if (isRecording) Color.Red else MaterialTheme.colorScheme.primary
-                        ) {
-                            Icon(
-                                imageVector = if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
-                                contentDescription = if (isRecording) "Parar gravação" else "Iniciar gravação",
-                                modifier = Modifier.size(36.dp),
-                                tint = Color.White
-                            )
-                        }
-
-                        if (isPlaying && !isRecording) {
-                            IconButton(
-                                onClick = { onStopPlayback() }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Stop,
-                                    contentDescription = "Parar reprodução",
-                                    tint = Color.Red
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = if (isRecording) "Toque para parar" else "Toque para gravar",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-
-                    if (isPlaying && playbackProgress > 0) {
-                        AudioPlayingProgressBar(playbackProgress)
-                    }
-                } else {
-                    PermissionButton(onPermissionRequest)
-                }
-            }
+            RecordingCard(
+                statusMessage,
+                hasPermission,
+                isRecording,
+                stopRecording,
+                startRecording,
+                isPlaying,
+                onStopPlayback,
+                playbackProgress,
+                onPermissionRequest
+            )
         }
         if (audioFiles.isNotEmpty()) {
             Card(
@@ -149,6 +96,83 @@ fun AudioRecorderScreen(
             }
         } else if (hasPermission) {
             EmptyPlaceHolder()
+        }
+    }
+}
+
+@Composable
+private fun RecordingCard(
+    statusMessage: String,
+    hasPermission: Boolean,
+    isRecording: Boolean,
+    stopRecording: () -> Unit,
+    startRecording: () -> Unit,
+    isPlaying: Boolean,
+    onStopPlayback: () -> Unit,
+    playbackProgress: Float,
+    onPermissionRequest: () -> Unit
+) {
+    Column(
+        modifier = Modifier.padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = statusMessage,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
+        if (hasPermission) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                FloatingActionButton(
+                    onClick = {
+                        if (isRecording) {
+                            stopRecording()
+                        } else {
+                            startRecording()
+                        }
+                    },
+                    modifier = Modifier.size(80.dp),
+                    shape = CircleShape,
+                    containerColor = if (isRecording) Color.Red else MaterialTheme.colorScheme.primary
+                ) {
+                    Icon(
+                        imageVector = if (isRecording) Icons.Default.Stop else Icons.Default.Mic,
+                        contentDescription = if (isRecording) "Parar gravação" else "Iniciar gravação",
+                        modifier = Modifier.size(36.dp),
+                        tint = Color.White
+                    )
+                }
+
+                if (isPlaying && !isRecording) {
+                    IconButton(
+                        onClick = { onStopPlayback() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Stop,
+                            contentDescription = "Parar reprodução",
+                            tint = Color.Red
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = if (isRecording) "Toque para parar" else "Toque para gravar",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            if (isPlaying && playbackProgress > 0) {
+                AudioPlayingProgressBar(playbackProgress)
+            }
+        } else {
+            PermissionButton(onPermissionRequest)
         }
     }
 }
