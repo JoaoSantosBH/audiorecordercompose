@@ -122,30 +122,14 @@ fun AudioRecorderScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
 
-                    // Barra de progresso da reprodução
                     if (isPlaying && playbackProgress > 0) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        LinearProgressIndicator(
-                            progress = { playbackProgress },
-                            modifier = Modifier.fillMaxWidth(),
-                            color = ProgressIndicatorDefaults.linearColor,
-                            trackColor = ProgressIndicatorDefaults.linearTrackColor,
-                            strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
-                        )
+                        AudioPlayingProgressBar(playbackProgress)
                     }
                 } else {
-                    Button(
-                        onClick = {
-                            onPermissionRequest()
-                        }
-                    ) {
-                        Text("Conceder Permissão de Áudio")
-                    }
+                    PermissionButton(onPermissionRequest)
                 }
             }
         }
-
-        // Lista de arquivos gravados
         if (audioFiles.isNotEmpty()) {
             Card(
                 modifier = Modifier
@@ -166,6 +150,29 @@ fun AudioRecorderScreen(
         } else if (hasPermission) {
             EmptyPlaceHolder()
         }
+    }
+}
+
+@Composable
+private fun AudioPlayingProgressBar(playbackProgress: Float) {
+    Spacer(modifier = Modifier.height(16.dp))
+    LinearProgressIndicator(
+        progress = { playbackProgress },
+        modifier = Modifier.fillMaxWidth(),
+        color = ProgressIndicatorDefaults.linearColor,
+        trackColor = ProgressIndicatorDefaults.linearTrackColor,
+        strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
+    )
+}
+
+@Composable
+private fun PermissionButton(onPermissionRequest: () -> Unit) {
+    Button(
+        onClick = {
+            onPermissionRequest()
+        }
+    ) {
+        Text("Conceder Permissão de Áudio")
     }
 }
 
