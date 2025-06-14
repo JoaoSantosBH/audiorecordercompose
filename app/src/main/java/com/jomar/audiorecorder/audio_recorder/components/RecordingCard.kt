@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -97,4 +98,20 @@ fun RecordingCard(
             PermissionButton(onPermissionRequest)
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecordingCardPreview(){
+    RecordingCard(
+        statusMessage = "Pressione o botão para começar a gravar",
+        hasPermission = true,
+        isRecording = false,
+        stopRecording = {},
+        startRecording = {},
+        isPlaying = false,
+        onStopPlayback = {},
+        playbackProgress = 0f,
+        onPermissionRequest = {}
+    )
 }

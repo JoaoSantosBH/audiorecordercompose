@@ -9,9 +9,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jomar.audiorecorder.audio_recorder.components.EmptyPlaceHolder
-import com.jomar.audiorecorder.audio_recorder.components.RecorderdAudioList
+import com.jomar.audiorecorder.audio_recorder.components.RecordedAudioList
 import com.jomar.audiorecorder.audio_recorder.components.RecordingCard
 import java.io.File
 
@@ -63,7 +64,7 @@ fun AudioRecorderScreen(
                     .weight(1f),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                RecorderdAudioList(
+                RecordedAudioList(
                     audioFiles = audioFiles,
                     currentPlayingFile = currentPlayingFile,
                     isPlaying = isPlaying,
@@ -76,5 +77,26 @@ fun AudioRecorderScreen(
             EmptyPlaceHolder()
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AudioRecorderScreenPreview() {
+    AudioRecorderScreen(
+        paddingValues = PaddingValues(16.dp),
+        statusMessage = "Pressione o botão para começar a gravar",
+        hasPermission = true,
+        isRecording = false,
+        isPlaying = false,
+        playbackProgress = 0f,
+        onPermissionRequest = {},
+        audioFiles = emptyList(),
+        currentPlayingFile = null,
+        onDeleteFile = {},
+        stopRecording = {},
+        onStartPlayback = {},
+        startRecording = {},
+        onStopPlayback = {}
+    )
 }
 

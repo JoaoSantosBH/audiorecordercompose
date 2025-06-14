@@ -7,6 +7,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -19,4 +20,10 @@ fun AudioPlayingProgressBar(playbackProgress: Float) {
         trackColor = ProgressIndicatorDefaults.linearTrackColor,
         strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
     )
+}
+
+@Preview
+@Composable
+fun AudioPlayingProgressBarPreview() {
+    AudioPlayingProgressBar(playbackProgress = 0.5f)
 }
